@@ -11,6 +11,7 @@ import { toastDoc } from './demos/ToastDoc';
 import { tooltipDoc } from './demos/TooltipDoc';
 import { badgeDoc } from './demos/BadgeDoc';
 import { spinnerDoc } from './demos/SpinnerDoc';
+import { menuDoc } from './demos/MenuDoc';
 
 export const componentDocs: ComponentDoc[] = [
   buttonDoc,
@@ -25,6 +26,7 @@ export const componentDocs: ComponentDoc[] = [
   tooltipDoc,
   badgeDoc,
   spinnerDoc,
+  menuDoc,
 ];
 
 export const getDoc = (slug: string) => componentDocs.find((d) => d.slug === slug);

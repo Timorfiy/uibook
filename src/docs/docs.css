@@ -70,17 +70,8 @@ body::before {
   color: var(--uib-text-1);
 }
 
-.docs-theme-select {
-  appearance: none;
-  height: 30px;
-  padding: 0 12px;
-  border: 0;
-  border-radius: var(--uib-radius-full);
-  background: var(--uib-fill);
-  font-size: 13px;
-  font-weight: 600;
-  color: var(--uib-text-1);
-  cursor: pointer;
+.docs-theme-menu {
+  flex: none;
 }
 
 .docs-menu-btn {
@@ -1075,7 +1066,7 @@ body::before {
 }
 
 @media (max-width: 560px) {
-  .docs-theme-select,
+  .docs-theme-menu,
   .docs-topbar__brand .uib-badge {
     display: none;
   }

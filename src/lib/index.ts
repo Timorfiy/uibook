@@ -44,6 +44,9 @@ export type {
 export { Tabs } from './components/Tabs/Tabs';
 export type { TabsProps, TabItem } from './components/Tabs/Tabs';
 
+export { Menu } from './components/Menu/Menu';
+export type { MenuProps, MenuItem } from './components/Menu/Menu';
+
 export { Modal } from './components/Modal/Modal';
 export type { ModalProps } from './components/Modal/Modal';
 

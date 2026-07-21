@@ -9,7 +9,7 @@ Its first design language, **Cupertino**, brings Apple-inspired frosted glass to
 
 ## Highlights
 
-- **12 production-ready components** — Button, Card, TextField, Switch, Slider, SegmentedControl, Tabs, Modal, Toast, Tooltip, Badge, Spinner — each documented with live, editable examples.
+- **13 production-ready components** — Button, Card, TextField, Switch, Slider, SegmentedControl, Tabs, Menu, Modal, Toast, Tooltip, Badge, Spinner — each documented with live, editable examples.
 - **Interchangeable theme architecture.** Components only read `--uib-*` design tokens. A theme is one CSS file + one registry entry; the component tree never changes.
 - **Cupertino theme.** Three depths of frosted glass (thin / regular / thick) built from `backdrop-filter` blur + saturation, layered tints, hairline strokes and specular highlights — in light and dark.
 - **Performance-first glass.** Blur is never animated, panels animate `transform`/`opacity` only, and glass degrades gracefully to solid surfaces when `backdrop-filter` is unsupported or the user prefers reduced transparency.
@@ -67,7 +67,7 @@ Creating a theme means defining the token space — including what “glass” m
 ```
 src/
 ├── lib/                      # the component library
-│   ├── components/           # 12 components, each: Name.tsx + Name.css
+│   ├── components/           # 13 components, each: Name.tsx + Name.css
 │   ├── styles/base.css       # reset, focus rings, glass utilities, fallbacks
 │   ├── themes/               # theme registry + one CSS file per theme
 │   └── utils/                # cn(), sliding-indicator hook

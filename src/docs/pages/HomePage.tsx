@@ -176,7 +176,7 @@ export function HomePage() {
 
       <section className="docs-index">
         <h2 className="docs-section-title">The chapters</h2>
-        <p className="docs-section-sub">Twelve components, each with live examples and a full prop reference.</p>
+        <p className="docs-section-sub">Thirteen components, each with live examples and a full prop reference.</p>
         <div className="docs-index__grid">
           {componentDocs.map((d) => (
             <Link key={d.slug} to={`/components/${d.slug}`} className="docs-index__item uib-glass">

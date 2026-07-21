@@ -1,7 +1,7 @@
 {
   "name": "uibook",
   "private": true,
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "A themeable React component library with a glass-first design language. Ships with the Cupertino theme.",
   "type": "module",
   "scripts": {

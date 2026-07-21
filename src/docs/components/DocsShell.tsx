@@ -1,8 +1,9 @@
 import { useEffect, useState } from 'react';
 import { Link, NavLink, Outlet, useLocation } from 'react-router-dom';
-import { BookBookmark, GithubLogo, List, Monitor, Moon, Sun, X } from '@phosphor-icons/react';
+import { BookBookmark, GithubLogo, List, Monitor, Moon, Sun, Swatches, X } from '@phosphor-icons/react';
 import {
   Badge,
+  Menu,
   SegmentedControl,
   ThemeMode,
   applyMode,
@@ -50,25 +51,31 @@ export function DocsShell() {
         <Link to="/" className="docs-topbar__brand">
           <BookBookmark size={22} weight="duotone" />
           <span>UIBook</span>
-          <Badge tone="neutral">v0.1</Badge>
+          <Badge tone="neutral">v0.2</Badge>
         </Link>
         <span className="docs-topbar__spacer" />
-        <select
-          className="docs-theme-select"
-          aria-label="Theme"
+        <Menu
+          className="docs-theme-menu"
+          label="Theme"
+          align="end"
           value={theme}
-          onChange={(e) => {
-            applyTheme(e.target.value);
-            setTheme(e.target.value);
+          onSelect={(v) => {
+            applyTheme(v);
+            setTheme(v);
           }}
-        >
-          {themes.map((t) => (
-            <option key={t.id} value={t.id} disabled={t.status !== 'available'}>
-              {t.name}
-              {t.status !== 'available' ? ' — soon' : ''}
-            </option>
-          ))}
-        </select>
+          trigger={
+            <>
+              <Swatches size={14} />
+              {themes.find((t) => t.id === theme)?.name ?? 'Theme'}
+            </>
+          }
+          items={themes.map((t) => ({
+            value: t.id,
+            label: t.name,
+            hint: t.status !== 'available' ? 'soon' : undefined,
+            disabled: t.status !== 'available',
+          }))}
+        />
         <SegmentedControl
           size="sm"
           aria-label="Color mode"
