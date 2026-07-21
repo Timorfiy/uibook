@@ -1,0 +1,91 @@
+.uib-toast-viewport {
+  position: fixed;
+  top: 16px;
+  right: 16px;
+  z-index: var(--uib-z-toast);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: min(368px, calc(100vw - 32px));
+  pointer-events: none;
+}
+
+.uib-toast {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 12px 12px 12px 14px;
+  border-radius: var(--uib-radius-l);
+  color: var(--uib-text-1);
+  pointer-events: auto;
+  animation: uib-toast-in var(--uib-dur-3) var(--uib-ease) both;
+}
+
+.uib-toast--leaving {
+  opacity: 0;
+  transform: translateX(12px);
+  transition:
+    opacity var(--uib-dur-2) var(--uib-ease),
+    transform var(--uib-dur-2) var(--uib-ease);
+}
+
+.uib-toast__icon {
+  flex: none;
+  margin-top: 1px;
+}
+
+.uib-toast--default .uib-toast__icon { color: var(--uib-accent); }
+.uib-toast--success .uib-toast__icon { color: var(--uib-success); }
+.uib-toast--error .uib-toast__icon { color: var(--uib-danger); }
+
+.uib-toast__content {
+  flex: 1;
+  min-width: 0;
+}
+
+.uib-toast__title {
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: -0.008em;
+}
+
+.uib-toast__description {
+  margin-top: 1px;
+  font-size: 13px;
+  line-height: 1.45;
+  color: var(--uib-text-2);
+}
+
+.uib-toast__close {
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  padding: 0;
+  border: 0;
+  border-radius: var(--uib-radius-full);
+  background: transparent;
+  color: var(--uib-text-3);
+  cursor: pointer;
+  transition:
+    background-color var(--uib-dur-2) var(--uib-ease),
+    color var(--uib-dur-2) var(--uib-ease);
+}
+
+.uib-toast__close:hover {
+  background: var(--uib-fill);
+  color: var(--uib-text-1);
+}
+
+@keyframes uib-toast-in {
+  from {
+    opacity: 0;
+    transform: translateX(24px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}

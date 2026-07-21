@@ -1,0 +1,131 @@
+/* ==========================================================================
+   UIBook — base layer
+   Reset, element defaults, focus rings, motion/transparency fallbacks and
+   the shared "glass" utilities every theme builds on.
+   Everything visual flows through --uib-* tokens defined by the active theme.
+   ========================================================================== */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: var(--uib-font-sans);
+  font-size: var(--uib-text-size, 16px);
+  line-height: 1.5;
+  color: var(--uib-text-1);
+  background-color: var(--uib-bg);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+h1, h2, h3, h4, h5, h6, p, figure, blockquote {
+  margin: 0;
+}
+
+button, input, select, textarea {
+  font: inherit;
+  color: inherit;
+}
+
+img, svg, video {
+  display: block;
+  max-width: 100%;
+}
+
+::selection {
+  background: var(--uib-accent-soft);
+  color: var(--uib-text-1);
+}
+
+/* Systemic z-index scale. Never invent one-off values above these. */
+:root {
+  --uib-z-sticky: 100;
+  --uib-z-drawer: 300;
+  --uib-z-overlay: 400;
+  --uib-z-modal: 500;
+  --uib-z-toast: 600;
+  --uib-z-tooltip: 700;
+}
+
+/* Accessible, themeable focus ring. The double ring (page color + accent)
+   reads as an offset halo and follows the element's own border-radius. */
+:where(a, button, input, select, textarea, [tabindex]):focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px var(--uib-bg), 0 0 0 6px var(--uib-focus-ring);
+}
+
+/* --------------------------------------------------------------------------
+   Glass utilities
+   The recipe is intentionally token-only so every theme can redefine what
+   "glass" means: blur depth, saturation, tint, stroke and highlight.
+   -------------------------------------------------------------------------- */
+
+.uib-glass,
+.uib-glass-thin,
+.uib-glass-thick {
+  border: 1px solid var(--uib-glass-stroke);
+  box-shadow:
+    var(--uib-glass-shadow),
+    inset 0 1px 0 var(--uib-glass-highlight);
+}
+
+.uib-glass {
+  background: var(--uib-glass-bg);
+  -webkit-backdrop-filter: blur(var(--uib-glass-blur)) saturate(var(--uib-glass-saturate));
+  backdrop-filter: blur(var(--uib-glass-blur)) saturate(var(--uib-glass-saturate));
+}
+
+.uib-glass-thin {
+  background: var(--uib-glass-thin-bg);
+  -webkit-backdrop-filter: blur(var(--uib-glass-thin-blur)) saturate(var(--uib-glass-thin-saturate));
+  backdrop-filter: blur(var(--uib-glass-thin-blur)) saturate(var(--uib-glass-thin-saturate));
+}
+
+.uib-glass-thick {
+  background: var(--uib-glass-thick-bg);
+  -webkit-backdrop-filter: blur(var(--uib-glass-thick-blur)) saturate(var(--uib-glass-thick-saturate));
+  backdrop-filter: blur(var(--uib-glass-thick-blur)) saturate(var(--uib-glass-thick-saturate));
+}
+
+/* Fallbacks: no backdrop-filter support, or the user asked the OS to reduce
+   transparency. Glass becomes an (almost) solid surface instead of a smudge. */
+@supports not ((backdrop-filter: blur(2px)) or (-webkit-backdrop-filter: blur(2px))) {
+  .uib-glass,
+  .uib-glass-thin,
+  .uib-glass-thick {
+    background: var(--uib-glass-bg-solid);
+  }
+}
+
+@media (prefers-reduced-transparency: reduce) {
+  .uib-glass,
+  .uib-glass-thin,
+  .uib-glass-thick {
+    background: var(--uib-glass-bg-solid);
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+  }
+}
+
+/* Motion discipline: every component animates transform/opacity only, and
+   all of it collapses when the user prefers reduced motion. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+  }
+}

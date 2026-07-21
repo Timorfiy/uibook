@@ -1,0 +1,29 @@
+.uib-spinner {
+  display: inline-block;
+  flex: none;
+  border-radius: 50%;
+  border-style: solid;
+  border-color: currentColor;
+  border-top-color: transparent;
+  opacity: 0.9;
+  animation: uib-spinner-rotate 0.7s linear infinite;
+}
+
+.uib-spinner--sm { width: 14px; height: 14px; border-width: 2px; }
+.uib-spinner--md { width: 18px; height: 18px; border-width: 2px; }
+.uib-spinner--lg { width: 26px; height: 26px; border-width: 2.5px; }
+
+/* The track fades via a gradient mask-free trick: 3/4 ring currentColor at
+   low opacity, arc at full color. */
+.uib-spinner {
+  border-color: color-mix(in srgb, currentColor 28%, transparent);
+  border-top-color: currentColor;
+}
+
+.uib-spinner--current { color: inherit; }
+.uib-spinner--accent { color: var(--uib-accent); }
+.uib-spinner--inverse { color: #ffffff; }
+
+@keyframes uib-spinner-rotate {
+  to { transform: rotate(360deg); }
+}

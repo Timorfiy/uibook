@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="en" data-uib-theme="cupertino">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="UIBook — a themeable React component library with a glass-first design language. Explore components, tokens and themes in an interactive book."
+    />
+    <title>UIBook — A component library, bound as a book</title>
+    <script>
+      // Resolve theme + color mode before first paint to avoid a flash.
+      (function () {
+        try {
+          var theme = localStorage.getItem('uibook-theme') || 'cupertino';
+          var mode = localStorage.getItem('uibook-mode') || 'system';
+          var dark =
+            mode === 'dark' ||
+            (mode === 'system' &&
+              window.matchMedia('(prefers-color-scheme: dark)').matches);
+          document.documentElement.dataset.uibTheme = theme;
+          document.documentElement.dataset.uibMode = dark ? 'dark' : 'light';
+        } catch (e) {
+          document.documentElement.dataset.uibTheme = 'cupertino';
+        }
+      })();
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/docs/main.tsx"></script>
+  </body>
+</html>

@@ -1,0 +1,202 @@
+/* ==========================================================================
+   UIBook theme: Cupertino
+   An Apple-inspired material language: frosted glass ("vibrancy") surfaces,
+   soft continuous corners, hairline strokes and specular top highlights.
+   Implemented purely as --uib-* tokens, so components never hard-code a
+   color. Light is the default; dark activates via [data-uib-mode="dark"]
+   or, when no explicit mode is set, via prefers-color-scheme.
+   ========================================================================== */
+
+[data-uib-theme='cupertino'],
+:root:not([data-uib-theme]) {
+  color-scheme: light;
+
+  /* Typography — SF Pro where available, graceful system fallback. */
+  --uib-font-sans: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'SF Pro Display',
+    'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  --uib-font-mono: ui-monospace, 'SF Mono', SFMono-Regular, Menlo, Consolas,
+    'Liberation Mono', monospace;
+  --uib-text-size: 16px;
+
+  /* Ink */
+  --uib-text-1: #1d1d1f;
+  --uib-text-2: rgba(60, 60, 67, 0.66);
+  --uib-text-3: rgba(60, 60, 67, 0.42);
+  --uib-text-on-accent: #ffffff;
+
+  /* Surfaces */
+  --uib-bg: #f5f5f7;
+  --uib-surface: #ffffff;
+  --uib-surface-2: #f2f2f7;
+  --uib-separator: rgba(60, 60, 67, 0.12);
+
+  /* Control fills (iOS systemFill ramp) */
+  --uib-fill: rgba(120, 120, 128, 0.16);
+  --uib-fill-2: rgba(120, 120, 128, 0.1);
+  --uib-fill-hover: rgba(120, 120, 128, 0.22);
+
+  /* Accent + semantic */
+  --uib-accent: #007aff;
+  --uib-accent-hover: #0062d1;
+  --uib-accent-soft: rgba(0, 122, 255, 0.12);
+  --uib-accent-gradient: linear-gradient(180deg, rgba(255, 255, 255, 0.22), rgba(255, 255, 255, 0));
+  --uib-danger: #ff3b30;
+  --uib-danger-soft: rgba(255, 59, 48, 0.12);
+  --uib-success: #28a745;
+  --uib-success-soft: rgba(52, 199, 89, 0.14);
+  --uib-warning: #b37500;
+  --uib-warning-soft: rgba(255, 149, 0, 0.14);
+
+  --uib-focus-ring: rgba(0, 122, 255, 0.45);
+
+  /* Glass — regular material */
+  --uib-glass-blur: 20px;
+  --uib-glass-saturate: 180%;
+  --uib-glass-bg: linear-gradient(180deg, rgba(255, 255, 255, 0.62), rgba(255, 255, 255, 0.42));
+  --uib-glass-stroke: rgba(255, 255, 255, 0.65);
+  --uib-glass-highlight: rgba(255, 255, 255, 0.9);
+  --uib-glass-shadow: 0 16px 40px rgba(21, 28, 43, 0.14);
+  --uib-glass-bg-solid: rgba(255, 255, 255, 0.94);
+
+  /* Glass — thin material (toolbars, floating chips) */
+  --uib-glass-thin-blur: 12px;
+  --uib-glass-thin-saturate: 160%;
+  --uib-glass-thin-bg: linear-gradient(180deg, rgba(255, 255, 255, 0.44), rgba(255, 255, 255, 0.28));
+
+  /* Glass — thick material (modals, sheets) */
+  --uib-glass-thick-blur: 32px;
+  --uib-glass-thick-saturate: 200%;
+  --uib-glass-thick-bg: linear-gradient(180deg, rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.64));
+
+  /* Shape */
+  --uib-radius-s: 8px;
+  --uib-radius-m: 12px;
+  --uib-radius-l: 16px;
+  --uib-radius-xl: 22px;
+  --uib-radius-full: 999px;
+
+  /* Elevation */
+  --uib-shadow-1: 0 1px 2px rgba(20, 26, 40, 0.08);
+  --uib-shadow-2: 0 8px 24px rgba(20, 26, 40, 0.1);
+  --uib-shadow-3: 0 24px 64px rgba(20, 26, 40, 0.2);
+
+  /* Motion */
+  --uib-dur-1: 140ms;
+  --uib-dur-2: 220ms;
+  --uib-dur-3: 360ms;
+  --uib-ease: cubic-bezier(0.25, 0.1, 0.25, 1);
+  --uib-ease-spring: cubic-bezier(0.32, 1.35, 0.5, 1);
+
+  /* Controls */
+  --uib-control-h-s: 28px;
+  --uib-control-h-m: 36px;
+  --uib-control-h-l: 44px;
+
+  /* Scene — ambient color washes that sit *behind* glass so the blur has
+     something to refract. Used by docs and demo backdrops. */
+  --uib-scene-base: #f5f5f7;
+  --uib-scene-wash-1: rgba(94, 92, 230, 0.22);
+  --uib-scene-wash-2: rgba(100, 210, 255, 0.26);
+  --uib-scene-wash-3: rgba(255, 55, 95, 0.12);
+}
+
+/* ---- Dark mode, explicit opt-in ---- */
+[data-uib-theme='cupertino'][data-uib-mode='dark'] {
+  color-scheme: dark;
+
+  --uib-text-1: #f5f5f7;
+  --uib-text-2: rgba(235, 235, 245, 0.64);
+  --uib-text-3: rgba(235, 235, 245, 0.36);
+
+  --uib-bg: #141416;
+  --uib-surface: #1c1c1e;
+  --uib-surface-2: #2c2c2e;
+  --uib-separator: rgba(84, 84, 88, 0.55);
+
+  --uib-fill: rgba(120, 120, 128, 0.24);
+  --uib-fill-2: rgba(120, 120, 128, 0.16);
+  --uib-fill-hover: rgba(120, 120, 128, 0.32);
+
+  --uib-accent: #0a84ff;
+  --uib-accent-hover: #2b95ff;
+  --uib-accent-soft: rgba(10, 132, 255, 0.2);
+  --uib-accent-gradient: linear-gradient(180deg, rgba(255, 255, 255, 0.16), rgba(255, 255, 255, 0));
+  --uib-danger: #ff453a;
+  --uib-danger-soft: rgba(255, 69, 58, 0.16);
+  --uib-success: #30d158;
+  --uib-success-soft: rgba(48, 209, 88, 0.16);
+  --uib-warning: #ff9f0a;
+  --uib-warning-soft: rgba(255, 159, 10, 0.16);
+
+  --uib-focus-ring: rgba(10, 132, 255, 0.6);
+
+  --uib-glass-bg: linear-gradient(180deg, rgba(46, 46, 52, 0.58), rgba(34, 34, 38, 0.42));
+  --uib-glass-stroke: rgba(255, 255, 255, 0.14);
+  --uib-glass-highlight: rgba(255, 255, 255, 0.09);
+  --uib-glass-shadow: 0 16px 40px rgba(0, 0, 0, 0.5);
+  --uib-glass-bg-solid: rgba(30, 30, 33, 0.95);
+
+  --uib-glass-thin-bg: linear-gradient(180deg, rgba(48, 48, 54, 0.4), rgba(36, 36, 40, 0.28));
+  --uib-glass-thick-bg: linear-gradient(180deg, rgba(44, 44, 50, 0.78), rgba(34, 34, 38, 0.62));
+
+  --uib-shadow-1: 0 1px 2px rgba(0, 0, 0, 0.4);
+  --uib-shadow-2: 0 8px 24px rgba(0, 0, 0, 0.42);
+  --uib-shadow-3: 0 24px 64px rgba(0, 0, 0, 0.55);
+
+  --uib-scene-base: #101014;
+  --uib-scene-wash-1: rgba(94, 92, 230, 0.2);
+  --uib-scene-wash-2: rgba(10, 132, 255, 0.18);
+  --uib-scene-wash-3: rgba(255, 55, 95, 0.12);
+}
+
+/* ---- Dark mode, following the OS when no explicit mode is set ---- */
+@media (prefers-color-scheme: dark) {
+  [data-uib-theme='cupertino']:not([data-uib-mode='light']):not([data-uib-mode='dark']),
+  :root:not([data-uib-theme]):not([data-uib-mode]) {
+    color-scheme: dark;
+
+    --uib-text-1: #f5f5f7;
+    --uib-text-2: rgba(235, 235, 245, 0.64);
+    --uib-text-3: rgba(235, 235, 245, 0.36);
+
+    --uib-bg: #141416;
+    --uib-surface: #1c1c1e;
+    --uib-surface-2: #2c2c2e;
+    --uib-separator: rgba(84, 84, 88, 0.55);
+
+    --uib-fill: rgba(120, 120, 128, 0.24);
+    --uib-fill-2: rgba(120, 120, 128, 0.16);
+    --uib-fill-hover: rgba(120, 120, 128, 0.32);
+
+    --uib-accent: #0a84ff;
+    --uib-accent-hover: #2b95ff;
+    --uib-accent-soft: rgba(10, 132, 255, 0.2);
+    --uib-accent-gradient: linear-gradient(180deg, rgba(255, 255, 255, 0.16), rgba(255, 255, 255, 0));
+    --uib-danger: #ff453a;
+    --uib-danger-soft: rgba(255, 69, 58, 0.16);
+    --uib-success: #30d158;
+    --uib-success-soft: rgba(48, 209, 88, 0.16);
+    --uib-warning: #ff9f0a;
+    --uib-warning-soft: rgba(255, 159, 10, 0.16);
+
+    --uib-focus-ring: rgba(10, 132, 255, 0.6);
+
+    --uib-glass-bg: linear-gradient(180deg, rgba(46, 46, 52, 0.58), rgba(34, 34, 38, 0.42));
+    --uib-glass-stroke: rgba(255, 255, 255, 0.14);
+    --uib-glass-highlight: rgba(255, 255, 255, 0.09);
+    --uib-glass-shadow: 0 16px 40px rgba(0, 0, 0, 0.5);
+    --uib-glass-bg-solid: rgba(30, 30, 33, 0.95);
+
+    --uib-glass-thin-bg: linear-gradient(180deg, rgba(48, 48, 54, 0.4), rgba(36, 36, 40, 0.28));
+    --uib-glass-thick-bg: linear-gradient(180deg, rgba(44, 44, 50, 0.78), rgba(34, 34, 38, 0.62));
+
+    --uib-shadow-1: 0 1px 2px rgba(0, 0, 0, 0.4);
+    --uib-shadow-2: 0 8px 24px rgba(0, 0, 0, 0.42);
+    --uib-shadow-3: 0 24px 64px rgba(0, 0, 0, 0.55);
+
+    --uib-scene-base: #101014;
+    --uib-scene-wash-1: rgba(94, 92, 230, 0.2);
+    --uib-scene-wash-2: rgba(10, 132, 255, 0.18);
+    --uib-scene-wash-3: rgba(255, 55, 95, 0.12);
+  }
+}

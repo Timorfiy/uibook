@@ -1,0 +1,88 @@
+.uib-slider {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-height: var(--uib-control-h-m);
+}
+
+.uib-slider__input {
+  -webkit-appearance: none;
+  appearance: none;
+  flex: 1;
+  min-width: 0;
+  height: 28px; /* generous hit area, thin visual track */
+  margin: 0;
+  background: transparent;
+  cursor: pointer;
+}
+
+/* WebKit track: the filled portion is a gradient driven by --uib-slider-pct,
+   so no JS runs on drag beyond React's controlled input update. */
+.uib-slider__input::-webkit-slider-runnable-track {
+  height: 5px;
+  border-radius: var(--uib-radius-full);
+  background: linear-gradient(
+    to right,
+    var(--uib-accent) 0 var(--uib-slider-pct),
+    var(--uib-fill) var(--uib-slider-pct) 100%
+  );
+}
+
+.uib-slider__input::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 22px;
+  height: 22px;
+  margin-top: -8.5px; /* (track 5px - thumb 22px) / 2 */
+  border: 0;
+  border-radius: 50%;
+  background: #ffffff;
+  box-shadow:
+    0 1.5px 5px rgba(0, 0, 0, 0.22),
+    0 0 0 0.5px rgba(0, 0, 0, 0.05);
+  transition: transform var(--uib-dur-1) var(--uib-ease);
+}
+
+.uib-slider__input:not(:disabled):active::-webkit-slider-thumb {
+  transform: scale(1.08);
+}
+
+/* Firefox */
+.uib-slider__input::-moz-range-track {
+  height: 5px;
+  border-radius: var(--uib-radius-full);
+  background: var(--uib-fill);
+}
+
+.uib-slider__input::-moz-range-progress {
+  height: 5px;
+  border-radius: var(--uib-radius-full);
+  background: var(--uib-accent);
+}
+
+.uib-slider__input::-moz-range-thumb {
+  width: 22px;
+  height: 22px;
+  border: 0;
+  border-radius: 50%;
+  background: #ffffff;
+  box-shadow:
+    0 1.5px 5px rgba(0, 0, 0, 0.22),
+    0 0 0 0.5px rgba(0, 0, 0, 0.05);
+}
+
+.uib-slider__value {
+  flex: none;
+  min-width: 3ch;
+  font-family: var(--uib-font-mono);
+  font-size: 13px;
+  text-align: right;
+  color: var(--uib-text-2);
+}
+
+.uib-slider--disabled {
+  opacity: 0.45;
+}
+
+.uib-slider--disabled .uib-slider__input {
+  cursor: default;
+}

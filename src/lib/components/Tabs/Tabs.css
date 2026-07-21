@@ -1,0 +1,100 @@
+.uib-tabs {
+  position: relative;
+  display: flex;
+}
+
+.uib-tabs--block .uib-tabs__tab {
+  flex: 1;
+  justify-content: center;
+}
+
+.uib-tabs__tab {
+  position: relative;
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  border: 0;
+  background: transparent;
+  font-weight: 500;
+  color: var(--uib-text-2);
+  white-space: nowrap;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  transition: color var(--uib-dur-2) var(--uib-ease);
+}
+
+.uib-tabs__tab:not(:disabled):hover {
+  color: var(--uib-text-1);
+}
+
+.uib-tabs__tab:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+
+.uib-tabs__indicator {
+  position: absolute;
+  left: 0;
+  transition:
+    transform var(--uib-dur-2) var(--uib-ease),
+    width var(--uib-dur-2) var(--uib-ease),
+    opacity var(--uib-dur-1) var(--uib-ease);
+}
+
+/* ---- Line variant: hairline row + accent underline ---- */
+.uib-tabs--line {
+  gap: 22px;
+  border-bottom: 1px solid var(--uib-separator);
+}
+
+.uib-tabs--line .uib-tabs__tab {
+  padding: 9px 2px 10px;
+  font-size: 14.5px;
+}
+
+.uib-tabs--line .uib-tabs__tab[data-active='true'] {
+  color: var(--uib-accent);
+  font-weight: 600;
+}
+
+.uib-tabs--line .uib-tabs__indicator {
+  bottom: -1px;
+  height: 2px;
+  border-radius: 2px;
+  background: var(--uib-accent);
+}
+
+/* ---- Pill variant: floating thumb on a filled track ---- */
+.uib-tabs--pill {
+  display: inline-flex;
+  padding: 2px;
+  background: var(--uib-fill);
+  border-radius: var(--uib-radius-full);
+}
+
+.uib-tabs--pill.uib-tabs--block {
+  display: flex;
+}
+
+.uib-tabs--pill .uib-tabs__tab {
+  height: 30px;
+  padding: 0 16px;
+  border-radius: var(--uib-radius-full);
+  font-size: 13.5px;
+}
+
+.uib-tabs--pill .uib-tabs__tab[data-active='true'] {
+  color: var(--uib-text-1);
+  font-weight: 600;
+}
+
+.uib-tabs--pill .uib-tabs__indicator {
+  top: 2px;
+  bottom: 2px;
+  border-radius: var(--uib-radius-full);
+  background: var(--uib-surface);
+  box-shadow:
+    0 2px 8px rgba(0, 0, 0, 0.14),
+    0 0 0 0.5px rgba(0, 0, 0, 0.04);
+}

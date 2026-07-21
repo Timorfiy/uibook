@@ -1,0 +1,76 @@
+.uib-switch {
+  position: relative;
+  flex: none;
+  padding: 0;
+  border: 0;
+  border-radius: var(--uib-radius-full);
+  background: var(--uib-fill);
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  transition: background-color var(--uib-dur-2) var(--uib-ease);
+}
+
+.uib-switch--md { width: 51px; height: 31px; }
+.uib-switch--sm { width: 41px; height: 25px; }
+
+.uib-switch__knob {
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  border-radius: 50%;
+  background: #ffffff;
+  box-shadow:
+    0 2px 6px rgba(0, 0, 0, 0.22),
+    0 0 1px rgba(0, 0, 0, 0.12);
+  transition: transform var(--uib-dur-2) var(--uib-ease-spring);
+}
+
+.uib-switch--md .uib-switch__knob { width: 27px; height: 27px; }
+.uib-switch--sm .uib-switch__knob { width: 21px; height: 21px; }
+
+.uib-switch--on {
+  background: var(--uib-success);
+}
+
+.uib-switch--on.uib-switch--md .uib-switch__knob { transform: translateX(20px); }
+.uib-switch--on.uib-switch--sm .uib-switch__knob { transform: translateX(16px); }
+
+.uib-switch:active:not(:disabled) .uib-switch__knob {
+  transform: scale(0.92);
+}
+
+.uib-switch--on.uib-switch--md:active:not(:disabled) .uib-switch__knob {
+  transform: translateX(20px) scale(0.92);
+}
+
+.uib-switch--on.uib-switch--sm:active:not(:disabled) .uib-switch__knob {
+  transform: translateX(16px) scale(0.92);
+}
+
+.uib-switch:disabled {
+  opacity: 0.45;
+  cursor: default;
+}
+
+.uib-switch-row {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.uib-switch-row__label {
+  font-size: 15px;
+  color: var(--uib-text-1);
+}
+
+.uib-switch-row--disabled {
+  cursor: default;
+  opacity: 0.6;
+}
+
+/* Clicking the visible label should toggle the inner button. */
+.uib-switch-row .uib-switch {
+  pointer-events: none;
+}

@@ -1,0 +1,31 @@
+.uib-card {
+  border-radius: var(--uib-radius-xl);
+  color: var(--uib-text-1);
+}
+
+.uib-card--solid {
+  background: var(--uib-surface);
+  border: 1px solid var(--uib-separator);
+  box-shadow: var(--uib-shadow-2);
+}
+
+.uib-card--interactive {
+  cursor: pointer;
+  transition:
+    transform var(--uib-dur-2) var(--uib-ease),
+    box-shadow var(--uib-dur-2) var(--uib-ease);
+}
+
+.uib-card--interactive:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--uib-shadow-3), inset 0 1px 0 var(--uib-glass-highlight);
+}
+
+.uib-card--interactive:active {
+  transform: translateY(-1px) scale(0.995);
+}
+
+.uib-card--pad-none { padding: 0; }
+.uib-card--pad-sm { padding: 14px; }
+.uib-card--pad-md { padding: 20px; }
+.uib-card--pad-lg { padding: 28px; }

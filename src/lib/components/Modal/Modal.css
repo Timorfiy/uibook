@@ -1,0 +1,99 @@
+.uib-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: var(--uib-z-modal);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background: rgba(15, 18, 26, 0.32);
+  -webkit-backdrop-filter: blur(10px) saturate(140%);
+  backdrop-filter: blur(10px) saturate(140%);
+  opacity: 0;
+  transition: opacity var(--uib-dur-2) var(--uib-ease);
+}
+
+.uib-modal-backdrop--visible {
+  opacity: 1;
+}
+
+.uib-modal {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-height: min(720px, calc(100dvh - 40px));
+  border-radius: var(--uib-radius-xl);
+  color: var(--uib-text-1);
+  opacity: 0;
+  transform: translateY(12px) scale(0.965);
+  transition:
+    transform var(--uib-dur-3) var(--uib-ease),
+    opacity var(--uib-dur-2) var(--uib-ease);
+}
+
+.uib-modal-backdrop--visible .uib-modal {
+  opacity: 1;
+  transform: none;
+}
+
+.uib-modal:focus-visible {
+  box-shadow: none; /* ring lands on inner controls instead */
+}
+
+.uib-modal--sm { max-width: 360px; }
+.uib-modal--md { max-width: 460px; }
+.uib-modal--lg { max-width: 640px; }
+
+.uib-modal__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 18px 20px 0;
+}
+
+.uib-modal__title {
+  font-size: 17px;
+  font-weight: 700;
+  letter-spacing: -0.014em;
+}
+
+.uib-modal__close {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  margin-left: auto;
+  padding: 0;
+  border: 0;
+  border-radius: var(--uib-radius-full);
+  background: var(--uib-fill);
+  color: var(--uib-text-2);
+  cursor: pointer;
+  transition:
+    background-color var(--uib-dur-2) var(--uib-ease),
+    color var(--uib-dur-2) var(--uib-ease);
+}
+
+.uib-modal__close:hover {
+  background: var(--uib-fill-hover);
+  color: var(--uib-text-1);
+}
+
+.uib-modal__body {
+  flex: 1;
+  padding: 12px 20px 20px;
+  overflow-y: auto;
+  font-size: 15px;
+  line-height: 1.55;
+  color: var(--uib-text-2);
+}
+
+.uib-modal__footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  padding: 14px 20px 18px;
+  border-top: 1px solid var(--uib-separator);
+}

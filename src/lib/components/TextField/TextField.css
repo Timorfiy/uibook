@@ -1,0 +1,95 @@
+.uib-field {
+  display: inline-flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.uib-field--block {
+  display: flex;
+  width: 100%;
+}
+
+.uib-field__label {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--uib-text-1);
+  letter-spacing: -0.008em;
+}
+
+.uib-field__control {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0 12px;
+  background: var(--uib-surface);
+  border: 1px solid var(--uib-separator);
+  border-radius: var(--uib-radius-m);
+  box-shadow: inset 0 1px 2px rgba(20, 26, 40, 0.04);
+  transition:
+    border-color var(--uib-dur-2) var(--uib-ease),
+    box-shadow var(--uib-dur-2) var(--uib-ease);
+}
+
+.uib-field--sm .uib-field__control { height: var(--uib-control-h-s); border-radius: var(--uib-radius-s); }
+.uib-field--md .uib-field__control { height: var(--uib-control-h-m); }
+.uib-field--lg .uib-field__control { height: var(--uib-control-h-l); }
+
+.uib-field__control:focus-within {
+  border-color: var(--uib-accent);
+  box-shadow: 0 0 0 3.5px var(--uib-accent-soft);
+}
+
+.uib-field--error .uib-field__control {
+  border-color: var(--uib-danger);
+}
+
+.uib-field--error .uib-field__control:focus-within {
+  box-shadow: 0 0 0 3.5px var(--uib-danger-soft);
+}
+
+.uib-field__icon {
+  display: inline-flex;
+  flex: none;
+  font-size: 16px;
+  color: var(--uib-text-3);
+}
+
+.uib-field__input {
+  flex: 1;
+  min-width: 0;
+  height: 100%;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  font-size: 15px;
+  letter-spacing: -0.008em;
+  color: var(--uib-text-1);
+}
+
+.uib-field--sm .uib-field__input { font-size: 13px; }
+.uib-field--lg .uib-field__input { font-size: 17px; }
+
+.uib-field__input::placeholder {
+  color: var(--uib-text-3);
+}
+
+.uib-field__input:focus-visible {
+  box-shadow: none; /* the control wrapper carries the ring */
+}
+
+.uib-field__note {
+  font-size: 12.5px;
+  color: var(--uib-text-2);
+}
+
+.uib-field--error .uib-field__note {
+  color: var(--uib-danger);
+}
+
+.uib-field--disabled {
+  opacity: 0.5;
+}
+
+.uib-field--disabled .uib-field__control {
+  background: var(--uib-fill-2);
+}

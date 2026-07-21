@@ -1,0 +1,1082 @@
+/* ==========================================================================
+   UIBook docs — "interactive book" presentation layer.
+   Built entirely with the library's own components and tokens (dogfooding).
+   Layout: fixed glass topbar, TOC sidebar as the book's table of contents,
+   and a frosted page surface that turns (rotateY) on navigation.
+   ========================================================================== */
+
+/* ---- Ambient scene: the colour washes glass refracts -------------------- */
+
+body {
+  background: var(--uib-scene-base);
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    radial-gradient(52vw 42vh at 10% -6%, var(--uib-scene-wash-2), transparent 62%),
+    radial-gradient(46vw 54vh at 97% 3%, var(--uib-scene-wash-1), transparent 60%),
+    radial-gradient(64vw 46vh at 55% 110%, var(--uib-scene-wash-3), transparent 58%);
+}
+
+/* ---- Top bar ------------------------------------------------------------ */
+
+.docs-topbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: var(--uib-z-sticky);
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  height: 60px;
+  padding: 0 20px;
+  border-width: 0 0 1px;
+  border-radius: 0;
+  box-shadow: none;
+}
+
+.docs-topbar__brand {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  font-size: 17px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--uib-accent);
+  text-decoration: none;
+}
+
+.docs-topbar__brand span {
+  color: var(--uib-text-1);
+}
+
+.docs-topbar__spacer {
+  flex: 1;
+}
+
+.docs-topbar__github {
+  display: inline-flex;
+  color: var(--uib-text-2);
+  transition: color var(--uib-dur-2) var(--uib-ease);
+}
+
+.docs-topbar__github:hover {
+  color: var(--uib-text-1);
+}
+
+.docs-theme-select {
+  appearance: none;
+  height: 30px;
+  padding: 0 12px;
+  border: 0;
+  border-radius: var(--uib-radius-full);
+  background: var(--uib-fill);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--uib-text-1);
+  cursor: pointer;
+}
+
+.docs-menu-btn {
+  display: none;
+  padding: 6px;
+  border: 0;
+  background: transparent;
+  color: var(--uib-text-1);
+  cursor: pointer;
+}
+
+/* ---- Sidebar: the table of contents ------------------------------------- */
+
+.docs-sidebar {
+  position: fixed;
+  top: 60px;
+  bottom: 0;
+  left: 0;
+  z-index: 90;
+  width: 264px;
+  overflow-y: auto;
+  padding: 20px 14px 30px;
+  border-right: 1px solid var(--uib-separator);
+}
+
+.docs-sidebar__drawer-head {
+  display: none;
+}
+
+.docs-sidebar__label {
+  padding: 20px 10px 8px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--uib-text-3);
+}
+
+.docs-sidebar__link {
+  display: flex;
+  align-items: baseline;
+  gap: 9px;
+  padding: 7px 10px;
+  border-radius: var(--uib-radius-m);
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--uib-text-2);
+  text-decoration: none;
+  transition:
+    background-color var(--uib-dur-2) var(--uib-ease),
+    color var(--uib-dur-2) var(--uib-ease);
+}
+
+.docs-sidebar__link:hover {
+  color: var(--uib-text-1);
+  background: var(--uib-fill-2);
+}
+
+.docs-sidebar__link.active {
+  color: var(--uib-accent);
+  background: var(--uib-accent-soft);
+  font-weight: 600;
+}
+
+.docs-sidebar__num {
+  min-width: 18px;
+  font-family: var(--uib-font-mono);
+  font-size: 11px;
+  color: var(--uib-text-3);
+}
+
+.docs-sidebar__link.active .docs-sidebar__num {
+  color: var(--uib-accent);
+}
+
+.docs-sidebar__foot {
+  margin-top: 26px;
+  padding: 14px 10px 0;
+  border-top: 1px solid var(--uib-separator);
+  font-size: 12.5px;
+  color: var(--uib-text-3);
+}
+
+.docs-sidebar__foot a {
+  color: var(--uib-text-2);
+}
+
+.docs-scrim {
+  position: fixed;
+  inset: 0;
+  z-index: 290;
+  background: rgba(10, 12, 18, 0.32);
+}
+
+/* ---- Page surface + the page-turn --------------------------------------- */
+
+.docs-main {
+  min-height: 100dvh;
+  margin-left: 264px;
+  padding-top: 60px;
+}
+
+.docs-page-wrap {
+  max-width: 940px;
+  margin: 0 auto;
+  padding: 34px 28px 110px;
+}
+
+.docs-page {
+  position: relative;
+  min-height: 62vh;
+  padding: 46px 52px;
+  border-radius: var(--uib-radius-xl);
+  transform-origin: left center;
+  animation: docs-page-turn 520ms var(--uib-ease) both;
+}
+
+/* The spine: a hairline gradient down the binding edge. */
+.docs-page::before {
+  content: '';
+  position: absolute;
+  top: 26px;
+  bottom: 26px;
+  left: 0;
+  width: 3px;
+  border-radius: 3px;
+  background: linear-gradient(
+    180deg,
+    transparent,
+    var(--uib-separator) 18%,
+    var(--uib-separator) 82%,
+    transparent
+  );
+  pointer-events: none;
+}
+
+@keyframes docs-page-turn {
+  from {
+    opacity: 0;
+    transform: perspective(1500px) rotateY(-5.5deg) translateX(16px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* ---- Typography helpers -------------------------------------------------- */
+
+.docs-chapter-tag {
+  margin: 0 0 6px;
+  font-family: var(--uib-font-mono);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--uib-accent);
+}
+
+.docs-page-title {
+  margin: 0 0 10px;
+  font-size: clamp(30px, 4vw, 40px);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1.08;
+}
+
+.docs-lede {
+  margin: 0 0 22px;
+  max-width: 64ch;
+  font-size: 17px;
+  line-height: 1.55;
+  color: var(--uib-text-2);
+}
+
+.docs-body-copy {
+  max-width: 68ch;
+  margin: 18px 0 0;
+  font-size: 15.5px;
+  line-height: 1.65;
+  color: var(--uib-text-2);
+}
+
+.docs-section-title {
+  margin: 44px 0 6px;
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.docs-section-sub {
+  max-width: 66ch;
+  margin: 0 0 8px;
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--uib-text-2);
+}
+
+.docs-muted {
+  margin: 4px 0 0;
+  font-size: 13.5px;
+  color: var(--uib-text-2);
+}
+
+.docs-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+}
+
+.docs-col {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 14px;
+}
+
+.docs-grid-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+  width: 100%;
+  max-width: 580px;
+}
+
+.docs-text-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 18px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--uib-accent);
+  text-decoration: none;
+}
+
+/* ---- Prose (guide pages) ------------------------------------------------- */
+
+.docs-prose h2 {
+  margin: 42px 0 12px;
+  font-size: 23px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.docs-prose h3 {
+  margin: 26px 0 10px;
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.docs-prose p {
+  max-width: 68ch;
+  margin: 0 0 14px;
+  font-size: 15.5px;
+  line-height: 1.65;
+  color: var(--uib-text-2);
+}
+
+.docs-prose ul {
+  max-width: 68ch;
+  margin: 0 0 14px;
+  padding-left: 22px;
+  font-size: 15px;
+  line-height: 1.65;
+  color: var(--uib-text-2);
+}
+
+.docs-prose li + li {
+  margin-top: 6px;
+}
+
+.docs-prose strong {
+  color: var(--uib-text-1);
+}
+
+.docs-prose :is(p, li) > code {
+  padding: 0.15em 0.42em;
+  border-radius: 6px;
+  background: var(--uib-fill-2);
+  font-family: var(--uib-font-mono);
+  font-size: 0.85em;
+  color: var(--uib-text-1);
+}
+
+/* ---- Hero (cover) -------------------------------------------------------- */
+
+.docs-hero {
+  display: grid;
+  grid-template-columns: 1.02fr 0.98fr;
+  align-items: center;
+  gap: 44px;
+  padding: 20px 0 6px;
+}
+
+.docs-hero__badge {
+  margin-bottom: 18px;
+}
+
+.docs-hero h1 {
+  margin: 0 0 16px;
+  font-size: clamp(34px, 4.4vw, 50px);
+  font-weight: 700;
+  letter-spacing: -0.033em;
+  line-height: 1.06;
+}
+
+.docs-hero__lede {
+  max-width: 46ch;
+  margin: 0 0 26px;
+  font-size: 17px;
+  line-height: 1.55;
+  color: var(--uib-text-2);
+}
+
+.docs-hero__cta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.docs-hero__cta a {
+  text-decoration: none;
+}
+
+.docs-hero-stack {
+  perspective: 1200px;
+}
+
+.docs-hero-stack__inner {
+  position: relative;
+  max-width: 340px;
+  margin-left: auto;
+  transform: rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg));
+  transform-style: preserve-3d;
+  transition: transform 320ms var(--uib-ease);
+}
+
+.docs-hero-stack__back {
+  position: absolute;
+  inset: 0;
+  transform: rotate(-5deg) translateY(14px) scale(0.97);
+}
+
+.docs-hero-stack__front {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.docs-hero-panel__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 15.5px;
+}
+
+.docs-hero-panel__slider {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.docs-hero-panel__label {
+  font-size: 13px;
+  font-weight: 600;
+}
+
+/* ---- Feature grid --------------------------------------------------------- */
+
+.docs-features {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 14px;
+  margin: 46px 0 0;
+}
+
+.docs-feature__icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  margin-bottom: 12px;
+  border-radius: 12px;
+  background: var(--uib-accent-soft);
+  color: var(--uib-accent);
+}
+
+.docs-features h3 {
+  margin: 0 0 5px;
+  font-size: 15.5px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+.docs-features p {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.55;
+  color: var(--uib-text-2);
+}
+
+/* ---- Materials + theme cards ---------------------------------------------- */
+
+.docs-materials,
+.docs-themes,
+.docs-index {
+  margin-top: 50px;
+}
+
+.docs-materials__stage {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+  margin-top: 16px;
+  padding: 22px;
+  border: 1px solid var(--uib-separator);
+  border-radius: var(--uib-radius-xl);
+  background:
+    radial-gradient(60% 90% at 12% 8%, var(--uib-scene-wash-2), transparent 65%),
+    radial-gradient(55% 80% at 88% 20%, var(--uib-scene-wash-1), transparent 62%),
+    radial-gradient(70% 90% at 50% 105%, var(--uib-scene-wash-3), transparent 60%);
+}
+
+.docs-themes__grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+  margin-top: 16px;
+}
+
+.docs-theme-swatch {
+  height: 86px;
+  margin-bottom: 14px;
+  border-radius: var(--uib-radius-l);
+  border: 1px solid var(--uib-separator);
+}
+
+.docs-theme-swatch--cupertino {
+  background: linear-gradient(135deg, #64d2ff, #0a84ff 55%, #5e5ce6);
+  border: 0;
+}
+
+.docs-theme-swatch--minimal {
+  background: linear-gradient(135deg, #fafafa 0 50%, #171717 50% 100%);
+}
+
+.docs-theme-swatch--codex {
+  position: relative;
+  background: linear-gradient(135deg, #0d1117, #12211a);
+  border: 0;
+}
+
+.docs-theme-swatch--codex::after {
+  content: '{ }';
+  position: absolute;
+  right: 12px;
+  bottom: 8px;
+  font-family: var(--uib-font-mono);
+  font-size: 15px;
+  color: #22c55e;
+}
+
+.docs-theme-card__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 5px;
+}
+
+.docs-theme-card__head h3 {
+  margin: 0;
+  font-size: 15.5px;
+  font-weight: 700;
+}
+
+.docs-themes p {
+  margin: 0;
+  font-size: 13.5px;
+  line-height: 1.55;
+  color: var(--uib-text-2);
+}
+
+/* ---- Chapter index --------------------------------------------------------- */
+
+.docs-index__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+  gap: 12px;
+  margin-top: 16px;
+}
+
+.docs-index__item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 16px;
+  border-radius: var(--uib-radius-l);
+  color: inherit;
+  text-decoration: none;
+  transition:
+    transform var(--uib-dur-2) var(--uib-ease),
+    box-shadow var(--uib-dur-2) var(--uib-ease);
+}
+
+.docs-index__item:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--uib-shadow-2), inset 0 1px 0 var(--uib-glass-highlight);
+}
+
+.docs-index__num {
+  font-family: var(--uib-font-mono);
+  font-size: 12px;
+  color: var(--uib-text-3);
+}
+
+.docs-index__body {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.docs-index__body strong {
+  font-size: 14.5px;
+  font-weight: 600;
+}
+
+.docs-index__body span {
+  overflow: hidden;
+  font-size: 12.5px;
+  color: var(--uib-text-2);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.docs-index__arrow {
+  color: var(--uib-text-3);
+  opacity: 0;
+  transform: translateX(-4px);
+  transition:
+    opacity var(--uib-dur-2) var(--uib-ease),
+    transform var(--uib-dur-2) var(--uib-ease);
+}
+
+.docs-index__item:hover .docs-index__arrow {
+  opacity: 1;
+  transform: none;
+}
+
+/* ---- Demo frames ----------------------------------------------------------- */
+
+.docs-demo {
+  margin: 24px 0;
+  overflow: hidden;
+  border: 1px solid var(--uib-separator);
+  border-radius: var(--uib-radius-l);
+  background: var(--uib-surface);
+  box-shadow: var(--uib-shadow-1);
+}
+
+.docs-demo__head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 14px;
+  padding: 16px 18px 0;
+}
+
+.docs-demo__title {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.docs-demo__desc {
+  margin: 3px 0 0;
+  font-size: 13.5px;
+  line-height: 1.5;
+  color: var(--uib-text-2);
+}
+
+.docs-demo__toggle {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  gap: 5px;
+  height: 26px;
+  padding: 0 11px;
+  border: 0;
+  border-radius: var(--uib-radius-full);
+  background: var(--uib-fill);
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--uib-text-1);
+  cursor: pointer;
+  transition: background-color var(--uib-dur-2) var(--uib-ease);
+}
+
+.docs-demo__toggle:hover {
+  background: var(--uib-fill-hover);
+}
+
+.docs-demo__toggle--on {
+  background: var(--uib-accent-soft);
+  color: var(--uib-accent);
+}
+
+.docs-demo__preview {
+  margin-top: 12px;
+  padding: 24px 18px;
+  border-top: 1px solid var(--uib-separator);
+}
+
+.docs-demo__preview--scene {
+  background:
+    radial-gradient(70% 100% at 8% 0%, var(--uib-scene-wash-2), transparent 62%),
+    radial-gradient(60% 90% at 95% 15%, var(--uib-scene-wash-1), transparent 60%),
+    radial-gradient(80% 100% at 50% 115%, var(--uib-scene-wash-3), transparent 58%);
+}
+
+.docs-demo__canvas {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  width: 100%;
+  min-height: 88px;
+}
+
+.docs-demo .docs-code {
+  margin: 0;
+  border-width: 1px 0 0;
+  border-radius: 0;
+}
+
+/* ---- Code blocks ------------------------------------------------------------ */
+
+.docs-code {
+  margin: 18px 0;
+  overflow: hidden;
+  border: 1px solid var(--uib-separator);
+  border-radius: var(--uib-radius-m);
+  background: var(--uib-surface-2);
+}
+
+.docs-code__bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 6px 8px 6px 14px;
+  border-bottom: 1px solid var(--uib-separator);
+}
+
+.docs-code__title {
+  font-family: var(--uib-font-mono);
+  font-size: 11.5px;
+  color: var(--uib-text-3);
+}
+
+.docs-code__copy {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  height: 24px;
+  padding: 0 9px;
+  border: 0;
+  border-radius: var(--uib-radius-full);
+  background: transparent;
+  font-size: 11.5px;
+  font-weight: 600;
+  color: var(--uib-text-2);
+  cursor: pointer;
+  transition:
+    background-color var(--uib-dur-2) var(--uib-ease),
+    color var(--uib-dur-2) var(--uib-ease);
+}
+
+.docs-code__copy:hover {
+  background: var(--uib-fill);
+  color: var(--uib-text-1);
+}
+
+.docs-code__pre {
+  margin: 0;
+  padding: 14px 16px;
+  overflow-x: auto;
+  font-family: var(--uib-font-mono);
+  font-size: 12.8px;
+  line-height: 1.66;
+  color: var(--uib-text-1);
+
+  /* Xcode-flavoured palette, retuned per mode */
+  --tok-keyword: #9b2393;
+  --tok-string: #c4221a;
+  --tok-number: #272ad8;
+  --tok-tag: #0a65a3;
+  --tok-attr: #5c6773;
+  --tok-comment: #8a8a8e;
+}
+
+[data-uib-mode='dark'] .docs-code__pre {
+  --tok-keyword: #fc5fa3;
+  --tok-string: #fc6a5d;
+  --tok-number: #d0bf69;
+  --tok-tag: #65cddf;
+  --tok-attr: #a0a0a6;
+  --tok-comment: #7c7c80;
+}
+
+.tok-keyword { color: var(--tok-keyword); }
+.tok-string { color: var(--tok-string); }
+.tok-number { color: var(--tok-number); }
+.tok-tag { color: var(--tok-tag); }
+.tok-attr { color: var(--tok-attr); }
+.tok-comment { color: var(--tok-comment); font-style: italic; }
+
+/* ---- Props table ------------------------------------------------------------- */
+
+.docs-props {
+  margin: 16px 0 8px;
+  overflow-x: auto;
+  border-radius: var(--uib-radius-l);
+}
+
+.docs-props table {
+  width: 100%;
+  min-width: 600px;
+  border-collapse: collapse;
+  font-size: 13.5px;
+}
+
+.docs-props th {
+  padding: 11px 16px;
+  border-bottom: 1px solid var(--uib-separator);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-align: left;
+  text-transform: uppercase;
+  color: var(--uib-text-3);
+}
+
+.docs-props td {
+  padding: 11px 16px;
+  border-bottom: 1px solid var(--uib-separator);
+  vertical-align: top;
+  line-height: 1.5;
+  color: var(--uib-text-2);
+}
+
+.docs-props tr:last-child td {
+  border-bottom: 0;
+}
+
+.docs-props__name {
+  font-family: var(--uib-font-mono);
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--uib-text-1);
+}
+
+.docs-props__type {
+  font-family: var(--uib-font-mono);
+  font-size: 12px;
+  color: var(--uib-accent);
+  white-space: nowrap;
+}
+
+/* ---- Book navigation (prev / next) ------------------------------------------- */
+
+.docs-booknav {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+  margin-top: 52px;
+}
+
+.docs-booknav__link {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 15px 18px;
+  border-radius: var(--uib-radius-l);
+  color: inherit;
+  text-decoration: none;
+  transition:
+    transform var(--uib-dur-2) var(--uib-ease),
+    box-shadow var(--uib-dur-2) var(--uib-ease);
+}
+
+.docs-booknav__link:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--uib-shadow-2), inset 0 1px 0 var(--uib-glass-highlight);
+}
+
+.docs-booknav__link--next {
+  align-items: flex-end;
+  text-align: right;
+}
+
+.docs-booknav__dir {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-family: var(--uib-font-mono);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--uib-text-3);
+}
+
+.docs-booknav__title {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--uib-text-1);
+}
+
+/* ---- Token browser (Foundations) --------------------------------------------- */
+
+.docs-tokens {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(185px, 1fr));
+  gap: 10px;
+  margin: 10px 0 6px;
+}
+
+.docs-token {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  padding: 10px;
+  border: 1px solid var(--uib-separator);
+  border-radius: var(--uib-radius-m);
+  background: var(--uib-surface);
+}
+
+.docs-token__chip {
+  height: 42px;
+  border: 1px solid var(--uib-separator);
+  border-radius: var(--uib-radius-s);
+}
+
+.docs-token__name {
+  font-family: var(--uib-font-mono);
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.docs-token__value {
+  overflow: hidden;
+  font-family: var(--uib-font-mono);
+  font-size: 11px;
+  color: var(--uib-text-3);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.docs-swatch-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  margin: 14px 0 8px;
+}
+
+.docs-swatch-box {
+  display: flex;
+  align-items: flex-end;
+  width: 92px;
+  height: 72px;
+  padding: 8px;
+  border: 1px solid var(--uib-separator);
+  background: var(--uib-surface);
+}
+
+.docs-swatch-box span {
+  font-family: var(--uib-font-mono);
+  font-size: 11px;
+  color: var(--uib-text-3);
+}
+
+/* ---- Footer ------------------------------------------------------------------ */
+
+.docs-footer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 10px;
+  margin-top: 60px;
+  padding-top: 20px;
+  border-top: 1px solid var(--uib-separator);
+  font-size: 13px;
+  color: var(--uib-text-3);
+}
+
+.docs-footer a {
+  color: var(--uib-text-2);
+  text-decoration: none;
+}
+
+.docs-footer a:hover {
+  color: var(--uib-text-1);
+}
+
+/* ---- Responsive -------------------------------------------------------------- */
+
+@media (max-width: 960px) {
+  .docs-menu-btn {
+    display: inline-flex;
+  }
+
+  .docs-sidebar {
+    top: 0;
+    z-index: var(--uib-z-drawer);
+    width: 284px;
+    padding-top: 16px;
+    border-right: 0;
+    border-radius: 0 var(--uib-radius-xl) var(--uib-radius-xl) 0;
+    background: var(--uib-glass-bg-solid);
+    -webkit-backdrop-filter: blur(var(--uib-glass-thick-blur)) saturate(var(--uib-glass-thick-saturate));
+    backdrop-filter: blur(var(--uib-glass-thick-blur)) saturate(var(--uib-glass-thick-saturate));
+    box-shadow: var(--uib-shadow-3);
+    transform: translateX(-103%);
+    transition: transform var(--uib-dur-3) var(--uib-ease);
+  }
+
+  .docs-sidebar--open {
+    transform: none;
+  }
+
+  .docs-sidebar__drawer-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 4px 10px 14px;
+    font-size: 15px;
+    font-weight: 700;
+  }
+
+  .docs-sidebar__drawer-head button {
+    display: inline-flex;
+    padding: 6px;
+    border: 0;
+    border-radius: var(--uib-radius-full);
+    background: var(--uib-fill);
+    color: var(--uib-text-2);
+    cursor: pointer;
+  }
+
+  .docs-main {
+    margin-left: 0;
+  }
+
+  .docs-hero {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+
+  .docs-hero-stack__inner {
+    margin: 0 auto;
+  }
+}
+
+@media (max-width: 720px) {
+  .docs-page-wrap {
+    padding: 22px 14px 90px;
+  }
+
+  .docs-page {
+    padding: 30px 22px;
+  }
+
+  .docs-features,
+  .docs-materials__stage,
+  .docs-themes__grid,
+  .docs-grid-2,
+  .docs-booknav {
+    grid-template-columns: 1fr;
+  }
+
+  .docs-booknav__link--next {
+    align-items: flex-start;
+    text-align: left;
+  }
+}
+
+@media (max-width: 560px) {
+  .docs-theme-select,
+  .docs-topbar__brand .uib-badge {
+    display: none;
+  }
+}

@@ -1,0 +1,24 @@
+.uib-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 2px 9px;
+  border-radius: var(--uib-radius-full);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  line-height: 1.5;
+  white-space: nowrap;
+}
+
+.uib-badge--soft.uib-badge--accent { background: var(--uib-accent-soft); color: var(--uib-accent); }
+.uib-badge--soft.uib-badge--success { background: var(--uib-success-soft); color: var(--uib-success); }
+.uib-badge--soft.uib-badge--warning { background: var(--uib-warning-soft); color: var(--uib-warning); }
+.uib-badge--soft.uib-badge--danger { background: var(--uib-danger-soft); color: var(--uib-danger); }
+.uib-badge--soft.uib-badge--neutral { background: var(--uib-fill); color: var(--uib-text-2); }
+
+.uib-badge--solid.uib-badge--accent { background: var(--uib-accent); color: var(--uib-text-on-accent); }
+.uib-badge--solid.uib-badge--success { background: var(--uib-success); color: #ffffff; }
+.uib-badge--solid.uib-badge--warning { background: var(--uib-warning); color: #ffffff; }
+.uib-badge--solid.uib-badge--danger { background: var(--uib-danger); color: #ffffff; }
+.uib-badge--solid.uib-badge--neutral { background: var(--uib-text-2); color: var(--uib-bg); }

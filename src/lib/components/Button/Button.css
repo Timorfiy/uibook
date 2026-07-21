@@ -1,0 +1,118 @@
+.uib-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border: 1px solid transparent;
+  border-radius: var(--uib-radius-full);
+  font-weight: 600;
+  letter-spacing: -0.011em;
+  white-space: nowrap;
+  cursor: pointer;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  transition:
+    transform var(--uib-dur-1) var(--uib-ease),
+    background-color var(--uib-dur-2) var(--uib-ease),
+    box-shadow var(--uib-dur-2) var(--uib-ease),
+    color var(--uib-dur-2) var(--uib-ease),
+    border-color var(--uib-dur-2) var(--uib-ease);
+}
+
+.uib-button:active:not(:disabled) {
+  transform: scale(0.965);
+}
+
+.uib-button:disabled {
+  opacity: 0.45;
+  cursor: default;
+}
+
+.uib-button__icon {
+  display: inline-flex;
+  font-size: 1.1em;
+}
+
+/* Sizes */
+.uib-button--sm {
+  height: var(--uib-control-h-s);
+  padding: 0 14px;
+  font-size: 13px;
+}
+
+.uib-button--md {
+  height: var(--uib-control-h-m);
+  padding: 0 18px;
+  font-size: 15px;
+}
+
+.uib-button--lg {
+  height: var(--uib-control-h-l);
+  padding: 0 24px;
+  font-size: 17px;
+}
+
+.uib-button--block {
+  width: 100%;
+}
+
+/* Primary — tinted, with a specular top sheen from the theme. */
+.uib-button--primary {
+  background-color: var(--uib-accent);
+  background-image: var(--uib-accent-gradient);
+  color: var(--uib-text-on-accent);
+  box-shadow: var(--uib-shadow-1), inset 0 1px 0 rgba(255, 255, 255, 0.22);
+}
+
+.uib-button--primary:hover:not(:disabled) {
+  background-color: var(--uib-accent-hover);
+}
+
+/* Secondary — neutral fill, iOS-style. */
+.uib-button--secondary {
+  background: var(--uib-fill);
+  color: var(--uib-text-1);
+}
+
+.uib-button--secondary:hover:not(:disabled) {
+  background: var(--uib-fill-hover);
+}
+
+/* Glass — thin frosted material. */
+.uib-button--glass {
+  background: var(--uib-glass-thin-bg);
+  -webkit-backdrop-filter: blur(var(--uib-glass-thin-blur)) saturate(var(--uib-glass-thin-saturate));
+  backdrop-filter: blur(var(--uib-glass-thin-blur)) saturate(var(--uib-glass-thin-saturate));
+  border-color: var(--uib-glass-stroke);
+  color: var(--uib-text-1);
+  box-shadow: var(--uib-shadow-1), inset 0 1px 0 var(--uib-glass-highlight);
+}
+
+.uib-button--glass:hover:not(:disabled) {
+  border-color: var(--uib-glass-highlight);
+  box-shadow: var(--uib-shadow-2), inset 0 1px 0 var(--uib-glass-highlight);
+}
+
+/* Plain — text-only, tint on hover. */
+.uib-button--plain {
+  background: transparent;
+  color: var(--uib-accent);
+}
+
+.uib-button--plain:hover:not(:disabled) {
+  background: var(--uib-accent-soft);
+}
+
+@supports not ((backdrop-filter: blur(2px)) or (-webkit-backdrop-filter: blur(2px))) {
+  .uib-button--glass {
+    background: var(--uib-glass-bg-solid);
+  }
+}
+
+@media (prefers-reduced-transparency: reduce) {
+  .uib-button--glass {
+    background: var(--uib-glass-bg-solid);
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+  }
+}
