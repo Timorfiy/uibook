@@ -17,22 +17,22 @@ const GITHUB_URL = 'https://github.com/Timorfiy/uibook';
 
 const features = [
   {
-    icon: <Swatches size={20} weight="duotone" />,
+    icon: <Swatches size={22} weight="duotone" />,
     title: 'Tokens, not hard-codes',
     body: 'Every colour, blur, radius and shadow flows through --uib-* custom properties. A theme is a pure CSS file — components never change.',
   },
   {
-    icon: <Gauge size={20} weight="duotone" />,
+    icon: <Gauge size={22} weight="duotone" />,
     title: 'Glass that respects the GPU',
     body: 'Static backdrop-filter, transform-only motion, and solid fallbacks for no-support browsers and reduced-transparency settings.',
   },
   {
-    icon: <MoonStars size={20} weight="duotone" />,
+    icon: <MoonStars size={22} weight="duotone" />,
     title: 'Dual-mode by default',
     body: 'Light and dark ship together in every theme. UIBook follows the OS, remembers the user, and never flashes on load.',
   },
   {
-    icon: <Feather size={20} weight="duotone" />,
+    icon: <Feather size={22} weight="duotone" />,
     title: 'A lean runtime',
     body: 'Vanilla CSS and a few focused hooks. No styling framework, no runtime theme engine, nothing between you and the cascade.',
   },
@@ -64,7 +64,6 @@ function HeroStack() {
         <Card material="regular" padding="lg" className="docs-hero-stack__front">
           <div className="docs-hero-panel__head">
             <strong>Reading preferences</strong>
-            <Badge tone="neutral">Live</Badge>
           </div>
           <Switch label="Page-turn animation" defaultChecked />
           <Switch label="Night mode" />
@@ -93,9 +92,6 @@ export function HomePage() {
     <div>
       <section className="docs-hero">
         <div>
-          <div className="docs-hero__badge">
-            <Badge>Cupertino theme</Badge>
-          </div>
           <h1>Glass components, bound as a book.</h1>
           <p className="docs-hero__lede">
             UIBook is a themeable React component library. Cupertino — its first design

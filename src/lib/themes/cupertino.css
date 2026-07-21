@@ -49,6 +49,13 @@
 
   --uib-focus-ring: rgba(0, 122, 255, 0.45);
 
+  /* Scrim — the dimming layer behind modals and drawers. The solid variant
+     stands in when blur is unavailable or reduced transparency is requested. */
+  --uib-scrim: rgba(15, 18, 26, 0.32);
+  --uib-scrim-solid: rgba(15, 18, 26, 0.55);
+  --uib-scrim-blur: 10px;
+  --uib-scrim-saturate: 140%;
+
   /* Glass — regular material */
   --uib-glass-blur: 20px;
   --uib-glass-saturate: 180%;
@@ -130,6 +137,9 @@
 
   --uib-focus-ring: rgba(10, 132, 255, 0.6);
 
+  --uib-scrim: rgba(0, 0, 0, 0.42);
+  --uib-scrim-solid: rgba(0, 0, 0, 0.62);
+
   --uib-glass-bg: linear-gradient(180deg, rgba(46, 46, 52, 0.58), rgba(34, 34, 38, 0.42));
   --uib-glass-stroke: rgba(255, 255, 255, 0.14);
   --uib-glass-highlight: rgba(255, 255, 255, 0.09);
@@ -180,6 +190,9 @@
     --uib-warning-soft: rgba(255, 159, 10, 0.16);
 
     --uib-focus-ring: rgba(10, 132, 255, 0.6);
+
+    --uib-scrim: rgba(0, 0, 0, 0.42);
+    --uib-scrim-solid: rgba(0, 0, 0, 0.62);
 
     --uib-glass-bg: linear-gradient(180deg, rgba(46, 46, 52, 0.58), rgba(34, 34, 38, 0.42));
     --uib-glass-stroke: rgba(255, 255, 255, 0.14);

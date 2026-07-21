@@ -32,7 +32,7 @@ function TokenSwatch({ name }: { name: string }) {
 
 const tokenGroups: { title: string; tokens: string[] }[] = [
   { title: 'Ink', tokens: ['--uib-text-1', '--uib-text-2', '--uib-text-3'] },
-  { title: 'Surfaces', tokens: ['--uib-bg', '--uib-surface', '--uib-surface-2', '--uib-separator'] },
+  { title: 'Surfaces', tokens: ['--uib-bg', '--uib-surface', '--uib-surface-2', '--uib-separator', '--uib-scrim'] },
   { title: 'Accent & semantic', tokens: ['--uib-accent', '--uib-success', '--uib-warning', '--uib-danger'] },
   { title: 'Control fills', tokens: ['--uib-fill', '--uib-fill-2', '--uib-accent-soft'] },
 ];

@@ -40,7 +40,7 @@ export const cardDoc: ComponentDoc = {
     },
     {
       title: 'Interactive',
-      description: 'Lifts on hover and presses on tap — for cards that navigate.',
+      description: 'Deepens its shadow on hover and presses on tap — for cards that navigate.',
       code: `<Card material="regular" interactive>
   <strong>Chapter 03 — TextField</strong>
   <p>Labels, helpers and validation, baked in.</p>
@@ -55,7 +55,7 @@ export const cardDoc: ComponentDoc = {
   ],
   props: [
     { name: 'material', type: "'thin' | 'regular' | 'thick' | 'solid'", default: "'regular'", description: 'Surface material: frosted glass in three depths, or opaque.' },
-    { name: 'interactive', type: 'boolean', default: 'false', description: 'Adds hover lift and press feedback.' },
+    { name: 'interactive', type: 'boolean', default: 'false', description: 'Adds hover emphasis and press feedback.' },
     { name: 'padding', type: "'none' | 'sm' | 'md' | 'lg'", default: "'md'", description: 'Inner spacing scale.' },
   ],
 };

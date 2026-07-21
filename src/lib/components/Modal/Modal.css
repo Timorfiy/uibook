@@ -6,11 +6,27 @@
   align-items: center;
   justify-content: center;
   padding: 20px;
-  background: rgba(15, 18, 26, 0.32);
-  -webkit-backdrop-filter: blur(10px) saturate(140%);
-  backdrop-filter: blur(10px) saturate(140%);
+  background: var(--uib-scrim);
+  -webkit-backdrop-filter: blur(var(--uib-scrim-blur)) saturate(var(--uib-scrim-saturate));
+  backdrop-filter: blur(var(--uib-scrim-blur)) saturate(var(--uib-scrim-saturate));
   opacity: 0;
   transition: opacity var(--uib-dur-2) var(--uib-ease);
+}
+
+/* No backdrop-filter support, or the user asked for reduced transparency:
+   the scrim keeps its dim with the solid variant instead of a smudge. */
+@supports not ((backdrop-filter: blur(2px)) or (-webkit-backdrop-filter: blur(2px))) {
+  .uib-modal-backdrop {
+    background: var(--uib-scrim-solid);
+  }
+}
+
+@media (prefers-reduced-transparency: reduce) {
+  .uib-modal-backdrop {
+    background: var(--uib-scrim-solid);
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+  }
 }
 
 .uib-modal-backdrop--visible {
